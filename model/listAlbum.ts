@@ -3,7 +3,7 @@ import { Album } from './album';
 // import { Manager } from '../Action/manage';
 export class ListAlbum  {
     listAlbum: Array<Album> = [];
-    owner: Account = new Account(305, "duy", 2);
+    owner: Account = new Account(305, 2, "duy");
     
 
     constructor() {

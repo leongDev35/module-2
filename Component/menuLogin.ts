@@ -1,13 +1,13 @@
 import { Account } from "../model/account";
 import { AccountManagement } from "../model/accountManagement";
-
-
+import { mainMenu } from "./menuMain";
 let listAccountManagement: AccountManagement = new AccountManagement();
 
+
 let input = require('readline-sync');
-const fs = require('fs');
 //! Menu Account 
-export function account() {
+export function account(listAcc: Map<any, any>) {
+  let obj;
   let menu = `
   ====Billing Software====
   1. Register1
@@ -16,36 +16,78 @@ export function account() {
   `
   let choise: string;
   do {
-    console.log(menu);
-    choise = input.question("Enter selection: ")
-    switch (choise) {
-      case "1":
-        let id = parseInt(input.question("Enter new user ID: "))
-        let name = input.question("Enter new user name: ")
-        let pass = parseInt(input.question("Enter new user password: "))
-        let user = new Account(id, name, pass)
-        listAccountManagement.add(user);
-        listAccountManagement.show()
+      console.log(menu);
+      choise = input.question("Enter selection: ")
+      switch (choise) {
+          case "1":
+              let flag = true;
+              do{
 
-        console.log("Add thanh cong")
-        break;
-      case "2":
-        // let userName = input.question("Enter user name:   ");
-        // let userPass = input.question("Enter user pass:   ");
-        break;
-      // case "3":
-      //   fs.readFile('./test.txt', function (err, data) {
-      //     if (err) throw err;
-      //     console.log(data.toString());
-      // });
-      
-      // console.log(1);
-      // break;
-      case "0":
-        break;
-      default:
-        console.log("Sai vui long nhap lua chon")  
-        break;
-    }
+              
+              let id = parseInt(input.question("Enter new user ID: "))
+              let pass = parseInt(input.question("Enter new user password: "))
+              if (!listAcc.has(id)) {
+                  listAcc.set(id, pass);
+                  listAccountManagement.add(new Account(id, pass));
+                  console.log("Add thanh cong")
+                  console.log(listAcc)
+                  console.log(listAccountManagement)
+                  flag = false;
+              } else {
+                  console.log("id da ton tai, vui long nhap lai")
+              }
+
+
+          }while (flag)
+              break;
+          case "2":
+              let userId;
+              let userPass;
+              let flag1 = true;
+              do { //! kiem tra user name
+                  userId = input.question("Enter user name:   ");
+                  if (listAcc.has(+userId)) {
+                      console.log("user da ton tai");
+                      flag1 = false;
+
+                  }else {
+                      console.log("user khong ton tai, vui long tao tai khoan")
+                      break;
+                  }
+               } while (flag1)
+               //! kiem tra passWord
+               do {
+                  userPass = input.question("Enter user pass:   ");
+                  if (!(listAcc.get(+userId) === (+userPass))) {
+                      console.log("sai mat khau vui long nhap lai")
+                  } else {
+                      //! cho nhay vao menu chinh
+                      console.log("dang nhap thanh cong")
+                      for( let i = 0; i< listAccountManagement.listAccount.length; i++ ) {
+                        if (listAccountManagement.listAccount[i].idUser == userId) {
+                          obj = listAccountManagement.listAccount[i];
+                          break;
+                        }
+
+                      }
+                      
+
+                      mainMenu(obj);
+                      flag1 = true;
+                  }
+               }  while (!flag1)
+              
+
+              //   let userPass = input.question("Enter user pass:   ");
+              //   console.log(userName, userPass);
+              
+              break;
+               
+          case "0":
+              break;
+          default:
+              console.log("Sai vui long nhap lua chon")
+              break;
+      }
   } while (choise != "0");
 }
