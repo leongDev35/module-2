@@ -2,7 +2,7 @@
 import { Account } from './account';
 import { Album } from './album';
 // import { Manager } from '../Action/manage';
-import { kiemTraChuoiRongVaLaChu, kiemTraRongVaTrungTen } from '../Validation/function';
+import { kiemTraChuoiRongVaLaChu, kiemTraChuoiRongVaLaSo, kiemTraRongVaTrungTen } from '../Validation/function';
 let input = require('readline-sync');
 
 
@@ -21,7 +21,9 @@ export class ListAlbum {
         let flag = true;
         do {
             let nameAlbum
+            let idAlbum
             let validAlbumName = true;
+            let validIdAlbum = true;
 
             do {
                  
@@ -32,13 +34,22 @@ export class ListAlbum {
                 } 
             }
             while (validAlbumName);
-            let idAlbum = input.question("Enter id: ")
+            do {
+                 
+                idAlbum = input.question("Enter id: ")
+                if (kiemTraChuoiRongVaLaSo(idAlbum) == true && this.idAlbumList.has(idAlbum) !== true) {
+                    validIdAlbum = false;
+
+                } else {
+                    console.log("Dữ liệu không hợp lệ hoặc bị trùng")
+                }
+            }
+            while (validIdAlbum);
+            
             if (!this.idAlbumList.has(idAlbum)) {
                 this.idAlbumList.set(idAlbum, nameAlbum);
                 this.listAlbum.push(new Album(nameAlbum, idAlbum));
                 console.log("Add thanh cong")
-                console.log(this.idAlbumList)
-                console.log(this.listAlbum)
                 flag = false;
             } else {
                 console.log("id da ton tai, vui long nhap lai")
@@ -118,6 +129,21 @@ export class ListAlbum {
 
 
     show() {
-        return this.listAlbum;
+
+        if(this.listAlbum.length == 0 ) {
+            console.log("Please add album")
+            
+        } else {
+        for (let i = 0; i < this.listAlbum.length;i++) {
+            console.log(
+                
+                    `
+                ${i+1}. Tên album: ${this.listAlbum[i].albumName}
+                Id: ${this.listAlbum[i].id}
+                
+                `
+            )
+        }
+    }
     }
 }

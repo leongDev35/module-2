@@ -7,8 +7,6 @@ export function menuAccount(obj: Account | undefined) {
     ====Quan Ly account====
     1. Show thong tin tai khoan
     2. thay doi thong tin tai khoan
-    3. xoa tai khoan
-
     0. Log out
     `
     let choise: string;
@@ -18,19 +16,17 @@ export function menuAccount(obj: Account | undefined) {
         switch (choise) {
             case "1":
                 console.log("Show thong tin tai khoan va thay doi thong tin tai khoan")
-                if(obj != undefined) {
-                obj.showAccount();
-            }
+                if (obj != undefined) {
+                    obj.showAccount();
+                }
 
                 break;
             case "2":
-                if(obj != undefined) {
+                if (obj != undefined) {
                     obj.editAccount();
                 }
                 break;
-                case "3":
-                    console.log("xoa tai khoan")
-                    break;            
+            
             case "0":
                 break;
             default:
@@ -38,4 +34,4 @@ export function menuAccount(obj: Account | undefined) {
                 break;
         }
     } while (choise != "0");
-  }
+}

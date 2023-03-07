@@ -1,3 +1,4 @@
+import { kiemTraChuoiRongVaLaChu, kiemTraChuoiRongVaLaSo } from "../Validation/function";
 import { Song } from "./song";
 let input = require('readline-sync');
 export class Album {
@@ -14,27 +15,67 @@ export class Album {
     //! business methods
     add(): void {
         let flag = true;
-        let idSong
-        let nameSong
+        let idSong;
+        let nameSong;
+        let artist;
+        let rating;
         do {
-            idSong = input.question("Enter id: ")
-            nameSong = input.question("Enter name: ")
-            if (!this.songList.has(idSong)) {
-                this.songList.set(idSong, nameSong);
 
-                console.log("Add thanh cong")
+            let validIdSong = true;
+            let validNameSong = true;
+            let validArtist = true;
+            let validRating = true;
 
-                flag = false;
-            } else {
-                console.log("id da ton tai, vui long nhap lai")
+            do {
+
+                nameSong = input.question("Enter name song: ");
+                if (kiemTraChuoiRongVaLaChu(nameSong) == true) {
+                    validNameSong = false;
+
+                }
             }
+            while (validNameSong);
+            do {
+
+                idSong = input.question("Enter id: ");
+                if (kiemTraChuoiRongVaLaSo(idSong) == true && this.songList.has(idSong) !== true) {
+                    validIdSong = false;
+
+                } else {
+                    console.log("Dữ liệu không hợp lệ hoặc bị trùng")
+                }
+            }
+            while (validIdSong);
+            do {
+
+                artist = input.question("Enter artist name: ")
+                if (kiemTraChuoiRongVaLaChu(artist) == true) {
+                    validArtist = false;
+
+                } else {
+                    console.log("Dữ liệu không hợp lệ")
+                }
+            }
+            while (validArtist);
+            do {
+
+                rating = input.question("Enter rating: ")
+                if (kiemTraChuoiRongVaLaSo(rating) == true) {
+                    validRating = false;
+
+                } else {
+                    console.log("Dữ liệu không hợp lệ")
+                }
+            }
+            while (validRating);
+
+
+            flag = false;
+
         }
 
         while (flag)
-        let artist = input.question("Enter artist: ")
-        let rating = input.question("Enter rating: ")
-
-        console.log(this.songList)
+        this.songList.set(idSong, nameSong);
         this.listSong.push(new Song(idSong, nameSong, artist, rating));
     }
 
@@ -72,7 +113,21 @@ export class Album {
 
 
     show() {
-        return this.listSong;
+        for (let i = 0; i < this.listSong.length; i++) {
+            console.log( 
+                `
+            ====Song ${i+1}====
+            1. ID User: ${this.listSong[i].id}
+            2.  title: ${this.listSong[i].title}
+            1. artist: ${this.listSong[i].artist}
+            1.rating: ${this.listSong[i].rating}
+            1. time: ${this.listSong[i].time}
+            1. album: ${this.listSong[i].album}
+            
+            `)
+            
+        }
+       
     }
 
     suaTenAlbum() {

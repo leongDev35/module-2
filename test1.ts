@@ -1,24 +1,29 @@
-import * as fs from 'fs';
-import * as rd from 'readline'
+var fs = require('fs');
+var data = {
+    name: "cliff",
+    age: "34",
+   
+  }
+  var data1 = {
+    name: "e",
+    age: "34",
+   
+  }
 
-var reader = rd.createInterface(fs.createReadStream("text.txt"))
+var jsonData = JSON.stringify(data);
+var jsonData1 = JSON.stringify(data1);
+//! lưu vào và thay đổi hết nội dung file
+// fs.writeFile("test.txt", jsonData1, function(err:any) {
+//     if (err) {
+//         console.log(err);
+//     }
+// });
+fs.appendFile('./test.txt',jsonData1 ,  function (err:string, data:string) {
+    if (err) throw err;
+    console.log('write file successfully');
+});
 
-var data: Array<{ number: number; from: string; to: string}> = [];
-reader.on("line", (l: string) => {
-    var tokens = l.split(' ');
-    var nr= parseInt(tokens[0]);
-    var from = tokens[1];
-    var to = tokens[2]
-    console.log(`nr: ${nr} from ${from} to ${to}`);
-    data.push({
-        number: nr, from, to
-    });
-})
-console.log(`Will be empty data has not yet been read ${data.length}` );
-
-reader.on("close", ()=> {
-    console.log(`Data has been read ${data.length}` );
-    data.forEach(element => {
-        console.log(`nr: ${element.number} from ${element.from} to ${element.to}`)
-    });
-})
+fs.readFile('./test.txt', function (err:string, data: string) {
+    if (err) throw err;
+    return data.toString();
+});

@@ -4,7 +4,7 @@ import { menuAccount } from "./menuManagerAccount";
 
 let input = require('readline-sync');
 
-export let albumList = new Map();
+
 //! Main Menu 
 export function mainMenu(obj: Account ) {
   let menu = ` 
@@ -22,7 +22,7 @@ export function mainMenu(obj: Account ) {
             menuAccount(obj)
               break;
           case "2":
-            menuAlbum(obj,albumList)
+            menuAlbum(obj)
               break;
                
           case "0":

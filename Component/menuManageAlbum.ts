@@ -7,7 +7,7 @@ let input = require('readline-sync');
 
 
 
-export function menuAlbum(obj: Account, albumList: Map<any,any>) {
+export function menuAlbum(obj: Account) {
     let menu = `
     ====Quan Ly anbum====
     1. Show danh sach album

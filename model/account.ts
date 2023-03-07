@@ -1,3 +1,4 @@
+import { kiemTraChuoiRongVaLaChu, kiemTraChuoiRongVaLaEmail, kiemTraChuoiRongVaLaSo } from '../Validation/function';
 import { Album } from './album';
 import { ListAlbum } from './listAlbum';
 let input = require('readline-sync');
@@ -150,25 +151,61 @@ export class Account {
     //! Input, output
     //! Business methods
     showAccount() {
-        console.log(this._idUser)
-        console.log(this._pass)
-        console.log(this._name )
-        console.log(this._email)
-        console.log(this._fullName)
-        console.log(this._phone)
-        console.log(this._age)
-        console.log(this._albumList)
+        console.log( 
+        `
+    ====Thong tin tai khoan====
+    1. ID User: ${this._idUser}
+    2. Name: ${this._name}
+    1. Email: ${this._email}
+    1. Full name: ${this._fullName}
+    1. phone: ${this._phone}
+    1. Age: ${this._age}
+    
+    `)
         
     }
 
     editAccount() {
+        let nameFlag = true;
+        let emailFlag = true;
+        let fullNameFlag = true;
+        let phoneFlag = true;
+        let ageFlag = true;
+        do {
+            this._name = input.question("Enter name: ");
+            if(kiemTraChuoiRongVaLaChu(this._name) === true) {
+                nameFlag = false;
+            }
+        } while (nameFlag);
+        do {
+            this._email = input.question("Enter email: ");
+
+            if(kiemTraChuoiRongVaLaEmail(this._email) === true) {
+                emailFlag = false;
+            }
+        } while (emailFlag);
+        do {
+            this._fullName = input.question("Enter full name: ");
+            if(kiemTraChuoiRongVaLaChu(this._fullName) === true) {
+                fullNameFlag = false;
+            }
+        } while (fullNameFlag);
+        do {
+            
+            this._phone = input.question("Enter phone: ");
+            if(kiemTraChuoiRongVaLaSo(this._phone) === true) {
+                phoneFlag = false;
+            }
+        } while (phoneFlag);
+        do {
+            this._age = input.question("Enter age: ");
+
+            if(kiemTraChuoiRongVaLaSo(this._age) === true) {
+                ageFlag = false;
+            }
+        } while (ageFlag);
         
-      
-        this._name = input.question("Enter name: ");
-        this._email = input.question("Enter email: ");
-        this._fullName = input.question("Enter full name: ");
-        this._phone = input.question("Enter phone: ");
-        this._age = input.question("Enter age: ");
+
     }
 
    

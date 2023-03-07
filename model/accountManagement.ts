@@ -3,7 +3,7 @@ import {Account} from "../model/account";
 
 export class AccountManagement  {
     listAccount: Account[] = [];
-    accountList = new Map();
+    accountList = new Map(); //! kiem tra id xem co trung khong
 //! business method
     add(t: Account): void {
         this.listAccount.push(t);
