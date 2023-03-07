@@ -1,6 +1,8 @@
+import { Validation } from "../Validation/valid";
 import { Account } from "../model/account";
 import { AccountManagement } from "../model/accountManagement";
 import { mainMenu } from "./menuMain";
+
 let listAccountManagement: AccountManagement = new AccountManagement();
 
 
@@ -21,11 +23,29 @@ export function account(t: AccountManagement) {
       switch (choise) {
           case "1":
               let flag = true;
-              do{
+              let validation = new Validation();
+              let valid =true;
 
+
+              do{
+                let id;
+                let pass
+                do {
+                    
+                    id = input.question("Enter new user ID: ")
+                   if (validation.kiemTraChuoiRongVaLaSo(id) === true) {
+                    valid = false;
+                   }
+                } while (valid);
+
+                do {
+                    
+                    pass = input.question("Enter new user password: ")
+                   if (validation.kiemTraChuoiRongVaLaSo(pass) === true) {
+                    valid = true;
+                   }
+                } while (!valid);
               
-              let id = parseInt(input.question("Enter new user ID: "))
-              let pass = parseInt(input.question("Enter new user password: "))
               if (!t.accountList.has(id)) {
                 t.accountList.set(id, pass);
                   t.add(new Account(id, pass));
@@ -46,7 +66,7 @@ export function account(t: AccountManagement) {
               let flag1 = true;
               do { //! kiem tra user name
                   userId = input.question("Enter user name:   ");
-                  if (t.accountList.has(+userId)) {
+                  if (t.accountList.has(userId)) {
                       console.log("user da ton tai");
                       flag1 = false;
 
@@ -58,7 +78,7 @@ export function account(t: AccountManagement) {
                //! kiem tra passWord
                do {
                   userPass = input.question("Enter user pass:   ");
-                  if (!(t.accountList.get(+userId) === (+userPass))) {
+                  if (!(t.accountList.get(userId) === (userPass))) {
                       console.log("sai mat khau vui long nhap lai")
                   } else {
                       //! cho nhay vao menu chinh
