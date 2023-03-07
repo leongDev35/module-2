@@ -3,8 +3,10 @@ import { menuAlbum } from "./menuManageAlbum";
 import { menuAccount } from "./menuManagerAccount";
 
 let input = require('readline-sync');
+
+export let albumList = new Map();
 //! Main Menu 
-export function mainMenu(obj: Account | undefined) {
+export function mainMenu(obj: Account ) {
   let menu = ` 
   ==== ${obj?.fullName} da dang nhap thanh cong====
   1. Quan ly tai khoan
@@ -20,7 +22,7 @@ export function mainMenu(obj: Account | undefined) {
             menuAccount(obj)
               break;
           case "2":
-            menuAlbum()
+            menuAlbum(obj,albumList)
               break;
                
           case "0":

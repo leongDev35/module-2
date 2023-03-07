@@ -1,9 +1,10 @@
 import { account } from "../Component/menuLogin";
-let listIdPass = new Map();
+import { AccountManagement } from "../model/accountManagement";
+let listAccountManagement: AccountManagement = new AccountManagement();
 
 
 
-account(listIdPass);
+account(listAccountManagement);
 
 
 

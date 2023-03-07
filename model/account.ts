@@ -1,3 +1,5 @@
+import { Album } from './album';
+import { ListAlbum } from './listAlbum';
 let input = require('readline-sync');
 
 
@@ -11,6 +13,8 @@ export class Account {
     private _phone:number|undefined;
     private _fullName:string|undefined;
     private _age:number|undefined;
+    private _albumList: ListAlbum | undefined;
+    
 
     //! Get set methods
     /**
@@ -20,7 +24,13 @@ export class Account {
 	public get idUser(): number {
 		return this._idUser;
 	}
-
+    // albumList
+    public get albumList(): ListAlbum | undefined {
+        return this._albumList;
+    }
+    public set albumList(value: ListAlbum | undefined) {
+        this._albumList = value;
+    }
     /**
      * Getter name
      * @return {string}
@@ -127,7 +137,7 @@ export class Account {
     
 
     //! Constructor
-    constructor(id: number, pass: number, name?: string, email?: string, fullName?: string,phone?: number,age?: number) {
+    constructor(id: number, pass: number, name?: string, email?: string, fullName?: string,phone?: number,age?: number , albumList?: ListAlbum | undefined) {
         this._idUser = id;
         this._pass = pass;
         this._name = name;
@@ -135,6 +145,7 @@ export class Account {
         this._fullName = fullName;
         this._phone = phone;
         this._age = age;
+        this._albumList = albumList;
     }
     //! Input, output
     //! Business methods
@@ -146,6 +157,8 @@ export class Account {
         console.log(this._fullName)
         console.log(this._phone)
         console.log(this._age)
+        console.log(this._albumList)
+        
     }
 
     editAccount() {
