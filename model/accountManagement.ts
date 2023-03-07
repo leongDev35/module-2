@@ -3,6 +3,7 @@ import {Account} from "../model/account";
 
 export class AccountManagement  {
     listAccount: Account[] = [];
+    accountList = new Map();
 //! business method
     add(t: Account): void {
         this.listAccount.push(t);

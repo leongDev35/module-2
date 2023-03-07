@@ -6,7 +6,7 @@ let listAccountManagement: AccountManagement = new AccountManagement();
 
 let input = require('readline-sync');
 //! Menu Account 
-export function account(listAcc: Map<any, any>) {
+export function account(t: AccountManagement) {
   let obj;
   let menu = `
   ====Billing Software====
@@ -26,12 +26,12 @@ export function account(listAcc: Map<any, any>) {
               
               let id = parseInt(input.question("Enter new user ID: "))
               let pass = parseInt(input.question("Enter new user password: "))
-              if (!listAcc.has(id)) {
-                  listAcc.set(id, pass);
-                  listAccountManagement.add(new Account(id, pass));
+              if (!t.accountList.has(id)) {
+                t.accountList.set(id, pass);
+                  t.add(new Account(id, pass));
                   console.log("Add thanh cong")
-                  console.log(listAcc)
-                  console.log(listAccountManagement)
+                  console.log(t.accountList)
+                  console.log(t)
                   flag = false;
               } else {
                   console.log("id da ton tai, vui long nhap lai")
@@ -46,7 +46,7 @@ export function account(listAcc: Map<any, any>) {
               let flag1 = true;
               do { //! kiem tra user name
                   userId = input.question("Enter user name:   ");
-                  if (listAcc.has(+userId)) {
+                  if (t.accountList.has(+userId)) {
                       console.log("user da ton tai");
                       flag1 = false;
 
@@ -58,21 +58,21 @@ export function account(listAcc: Map<any, any>) {
                //! kiem tra passWord
                do {
                   userPass = input.question("Enter user pass:   ");
-                  if (!(listAcc.get(+userId) === (+userPass))) {
+                  if (!(t.accountList.get(+userId) === (+userPass))) {
                       console.log("sai mat khau vui long nhap lai")
                   } else {
                       //! cho nhay vao menu chinh
                       console.log("dang nhap thanh cong")
-                      for( let i = 0; i< listAccountManagement.listAccount.length; i++ ) {
-                        if (listAccountManagement.listAccount[i].idUser == userId) {
-                          obj = listAccountManagement.listAccount[i];
+                      for( let i = 0; i< t.listAccount.length; i++ ) {
+                        if (t.listAccount[i].idUser == userId) {
+                          obj = t.listAccount[i];
                           break;
                         }
 
                       }
                       
-
-                      mainMenu(obj);
+                      if(obj != undefined) {
+                      mainMenu(obj);}
                       flag1 = true;
                   }
                }  while (!flag1)
